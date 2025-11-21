@@ -30,7 +30,6 @@ app.include_router(documents.router, prefix="/api", tags=["Documents"])
 # app.include_router(generate.router, prefix="/api", tags=["Generate"])
 
 
-# --- 動作確認用のエンドポイント ---
 @app.get("/")
 def root():
     return {"message": "RAG PoC API 起動中"}
