@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build files
+dist/
+build/
+*.egg-info/
+
+# Logs
+*.log
+
+# Node modules (if any)
+node_modules/
+
+# Frontend build
+frontend/dist/
+frontend/node_modules/
+
+# Backend data
+backend/data/uploads/*
+!backend/data/uploads/.gitkeep
+backend/data/vector_store/*.json
+!backend/data/vector_store/.gitkeep
+
+# AWS credentials (if accidentally added)
+*.pem
+credentials
+config
+

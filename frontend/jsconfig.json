@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "checkJs": false,
+    "forceConsistentCasingInFileNames": false,
+    "baseUrl": "./src",
+    "jsx": "react-jsx",
+    "target": "es2020",
+    "lib": ["ES2020", "DOM"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "types": ["vite/client"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+
