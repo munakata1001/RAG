@@ -9,8 +9,8 @@ from services import activity_log
 
 router = APIRouter()
 
-AWS_REGION = "ap-northeast-1"
-MODEL_ID = "anthropic.claude-3-sonnet-20240229-v1:0"   # Claude 3 Sonnet 例
+AWS_REGION = os.getenv("AWS_REGION", "ap-northeast-1")
+MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "anthropic.claude-3-5-sonnet-20240620-v1:0")   # Claude 3.5 Sonnet (on-demand対応)
 
 bedrock = boto3.client("bedrock-runtime", region_name=AWS_REGION)
 

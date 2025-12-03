@@ -77,8 +77,8 @@ except Exception as e:
 print()
 
 AWS_REGION = os.getenv("AWS_REGION", "ap-northeast-1")
-# デフォルトモデルID: 標準版を使用
-MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "anthropic.claude-3-sonnet-20240229-v1:0")
+# デフォルトモデルID: Claude 3.5 Sonnetを使用（より新しいバージョンでon-demand対応）
+MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "anthropic.claude-3-5-sonnet-20240620-v1:0")
 
 def test_bedrock():
     """Bedrock接続をテストする"""
@@ -187,10 +187,23 @@ def test_bedrock():
             else:
                 print(f"  ⚠️  現在のモデルID '{MODEL_ID}' が見つかりません")
                 print("  利用可能なモデルIDを使用してください")
-                # 推奨モデルを提案
-                sonnet_models = [m for m in available_models if "sonnet" in m.lower() and ":0" in m and ":28k" not in m]
-                if sonnet_models:
-                    print(f"  推奨: {sonnet_models[0]}")
+                # 推奨モデルを提案（on-demand対応のモデルを優先）
+                # Claude 3.5 Sonnetを優先、次にClaude 3 Haiku、最後にClaude 3 Sonnet
+                recommended_models = []
+                for pattern in ["claude-3-5-sonnet", "claude-3-haiku", "claude-3-sonnet"]:
+                    matching = [m for m in available_models if pattern in m.lower() and ":0" in m and ":28k" not in m and ":200k" not in m]
+                    if matching:
+                        recommended_models.extend(matching)
+                
+                if recommended_models:
+                    recommended = recommended_models[0]
+                    print(f"  推奨: {recommended}")
+                    print(f"  このモデルを使用するには、.envファイルに以下を設定してください:")
+                    print(f"  BEDROCK_MODEL_ID={recommended}")
+                else:
+                    # フォールバック: 利用可能な最初のモデル
+                    if available_models:
+                        print(f"  利用可能なモデル: {available_models[0]}")
         else:
             print("⚠️  Claude 3モデルが見つかりません")
             print("   Bedrockモデルへのアクセスが有効化されているか確認してください")
@@ -274,7 +287,13 @@ def test_bedrock():
             print("解決方法:")
             print("1. モデルIDが正しいか確認")
             print(f"   現在のモデルID: {MODEL_ID}")
-            print("2. リージョンでモデルが利用可能か確認")
+            print("2. このエラーは、モデルがon-demand throughputに対応していない可能性があります")
+            print("   利用可能なモデルIDを使用してください:")
+            print("   - anthropic.claude-3-5-sonnet-20240620-v1:0 (推奨)")
+            print("   - anthropic.claude-3-haiku-20240307-v1:0")
+            print("3. .envファイルに以下を設定してください:")
+            print("   BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20240620-v1:0")
+            print("4. リージョンでモデルが利用可能か確認")
             print(f"   現在のリージョン: {AWS_REGION}")
         else:
             print("詳細は BEDROCK_SETUP.md を参照してください")

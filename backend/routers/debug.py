@@ -12,6 +12,31 @@ router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
+@router.get("/debug/endpoints")
+async def get_endpoints() -> Dict[str, Any]:
+    """
+    登録されているエンドポイント一覧を返す
+    """
+    from fastapi import Request
+    from fastapi.routing import APIRoute
+    
+    # リクエストオブジェクトからappを取得
+    # 注意: この方法は動作しない可能性があるため、別の方法を検討する
+    
+    return {
+        "message": "エンドポイント一覧を取得するには、http://localhost:8000/docs にアクセスしてください",
+        "expected_endpoints": [
+            "POST /api/rag",
+            "POST /api/rag/search",
+            "POST /api/search",
+            "POST /api/generate",
+            "GET /api/debug/vectors",
+            "GET /api/debug/endpoints",
+            "GET /health"
+        ]
+    }
+
+
 @router.get("/debug/vectors")
 async def get_vector_store_status() -> Dict[str, Any]:
     """

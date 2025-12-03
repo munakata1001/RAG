@@ -67,15 +67,15 @@ def serve_root():
 # 注意: FastAPIのルーティングでは、より具体的なルート（/assets, /api等）が先にマッチするため、
 # この関数はAPIパスや静的ファイルパス以外のGETリクエストに対してのみ呼ばれる
 # POST/PUT/DELETEなどのリクエストは、APIルーターが先にマッチするため、この関数には到達しない
-# ただし、念のためAPIパスを明示的に除外
 @app.get("/{full_path:path}")
 def serve_spa(full_path: str):
-    # APIパスやヘルスチェックは除外（GETリクエストのみ）
+    # APIパスやヘルスチェック、静的ファイルは除外（GETリクエストのみ）
     # この関数はGETリクエストのみを処理するため、POSTリクエストには影響しない
     if (full_path.startswith("api/") or 
         full_path.startswith("admin/") or 
         full_path == "health" or
         full_path.startswith("assets/")):
+        # APIパスへのGETリクエストは404を返す（APIルーターが先にマッチするはずだが、念のため）
         raise HTTPException(status_code=404, detail="Not found")
     
     # SPAのindex.htmlを返す（クライアント側ルーティング用）

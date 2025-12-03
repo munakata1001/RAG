@@ -88,7 +88,7 @@ def check_env_file():
             print("  ⚠️  値が空です。.envファイルに AWS_SECRET_ACCESS_KEY=your-secret を記入してください")
         
         print(f"AWS_REGION: {region or '未設定（デフォルト: ap-northeast-1）'}")
-        print(f"BEDROCK_MODEL_ID: {model_id or '未設定（デフォルト: anthropic.claude-3-sonnet-20240229-v1:0）'}")
+        print(f"BEDROCK_MODEL_ID: {model_id or '未設定（デフォルト: anthropic.claude-3-5-sonnet-20240620-v1:0）'}")
         print("-" * 60)
         
         # 問題の診断

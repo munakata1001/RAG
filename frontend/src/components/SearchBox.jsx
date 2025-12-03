@@ -16,8 +16,8 @@ export default function SearchBox({ onResults, onSearchStart, onRAGResult, useRA
         const res = await api.post("/rag", { 
           query: q, 
           top_k: 5,
-          max_tokens: 2000,  // より長い回答を生成
-          temperature: 0.3   // より一貫性のある回答を生成
+          max_tokens: 3000,  // より詳細な回答を生成
+          temperature: 0.2   // より一貫性と正確性を重視
         });
         onRAGResult?.(q, res.data);
         // 検索結果も返す（後方互換性のため）
